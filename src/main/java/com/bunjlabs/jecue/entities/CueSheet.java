@@ -1,21 +1,21 @@
 package com.bunjlabs.jecue.entities;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CueSheet {
 
     private CueDiskInfo diskInfo;
-    private List<CueTrackInfo> tracks;
+    private List<CueFileInfo> files;
 
     public CueSheet() {
         this.diskInfo = new CueDiskInfo();
-        this.tracks = new LinkedList<>();
+        this.files = new ArrayList<>();
     }
 
-    public CueSheet(CueDiskInfo diskInfo, List<CueTrackInfo> tracks) {
+    public CueSheet(CueDiskInfo diskInfo, List<CueFileInfo> files) {
         this.diskInfo = diskInfo;
-        this.tracks = tracks;
+        this.files = files;
     }
 
     public CueDiskInfo getDiskInfo() {
@@ -26,12 +26,12 @@ public class CueSheet {
         this.diskInfo = diskInfo;
     }
 
-    public List<CueTrackInfo> getTracks() {
-        return tracks;
+    public List<CueFileInfo> getFiles() {
+        return files;
     }
 
-    public void setTracks(List<CueTrackInfo> tracks) {
-        this.tracks = tracks;
+    public void setFiles(List<CueFileInfo> files) {
+        this.files = files;
     }
 
 }

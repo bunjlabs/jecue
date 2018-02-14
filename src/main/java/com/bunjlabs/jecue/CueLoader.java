@@ -1,5 +1,6 @@
 package com.bunjlabs.jecue;
 
+import com.bunjlabs.jecue.entities.CueFileInfo;
 import com.bunjlabs.jecue.entities.CueSheet;
 import com.bunjlabs.jecue.entities.CueTrackIndex;
 import com.bunjlabs.jecue.entities.CueTrackInfo;
@@ -37,9 +38,7 @@ public class CueLoader {
     private final CueSheet cueSheet = new CueSheet();
     private final Reader reader;
 
-    private String currentFileName = null;
-    private String currentFileType = null;
-
+    private CueFileInfo currentFileInfo = null;
     private CueTrackInfo currentTrackInfo = null;
 
     public CueLoader(String input) {
@@ -113,26 +112,24 @@ public class CueLoader {
                 break;
             }
             case FILE: {
-                currentFileName = command.args[0];
-                currentFileType = command.args[1];
+                currentFileInfo = new CueFileInfo();
+                currentFileInfo.setFileName(command.args[0]);
+                currentFileInfo.setFileType(command.args[1]);
+
+                cueSheet.getFiles().add(currentFileInfo);
                 break;
             }
             case TRACK: {
-                if (currentTrackInfo != null) {
-                    cueSheet.getTracks().add(currentTrackInfo);
-                    currentTrackInfo = null;
-                }
-                
-                if (currentFileName == null || currentFileType == null) break;
+                if (currentFileInfo == null || currentFileInfo == null) break;
 
                 currentTrackInfo = new CueTrackInfo();
                 currentTrackInfo.setNumber(Integer.parseInt(command.args[0]));
-                currentTrackInfo.setFileName(currentFileName);
-                currentTrackInfo.setFileType(currentFileType);
+
+                currentFileInfo.getTracks().add(currentTrackInfo);
                 break;
             }
             case INDEX: {
-                if (currentTrackInfo == null || currentFileName == null || currentFileType == null) break;
+                if (currentTrackInfo == null || currentFileInfo == null) break;
                 currentTrackInfo.getIndexes().put(Integer.parseInt(command.args[0]), parseIndex(command.args[1]));
                 break;
             }
