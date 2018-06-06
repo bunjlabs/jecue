@@ -9,6 +9,12 @@ public class CueTrackIndex {
     public CueTrackIndex() {
     }
 
+    public CueTrackIndex(float seconds) {
+        this.minutes = (int) (seconds / 60);
+        this.seconds = (int) (seconds % 60);
+        this.frames = (int) ((seconds - (this.minutes * 60) - this.seconds) * 75);
+    }
+
     public CueTrackIndex(int minutes, int seconds, int frames) {
         this.minutes = minutes;
         this.seconds = seconds;
@@ -39,7 +45,11 @@ public class CueTrackIndex {
         this.frames = frames;
     }
 
-    public long getFramesFull() {
+    public int getFramesFull() {
         return frames + seconds * 75 + minutes * 60 * 75;
+    }
+
+    public int getSecondsDurationTo(CueTrackIndex to) {
+        return Math.abs((this.minutes * 60 + this.seconds) - (to.minutes * 60 + to.seconds));
     }
 }
