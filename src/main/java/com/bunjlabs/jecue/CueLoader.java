@@ -147,7 +147,7 @@ public class CueLoader {
             if (input.startsWith(type.name())) {
                 List<String> list = new ArrayList<String>();
 
-                Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(input.substring(type.name().length() + 1));
+                Matcher m = Pattern.compile("([^\"]\\S*|\"[^\"]*\")\\s*").matcher(input.substring(type.name().length() + 1));
 
                 while (m.find()) list.add(m.group(1).replace("\"", ""));
 
